@@ -73,6 +73,8 @@ class Population[A<:Host:ClassTag](
   }
   
   protected def processResult(result : Result) = {
+//    println("Got result");
+//    println(result)
     population += result
     while (population.size > size)
       population.dequeue()
@@ -95,7 +97,7 @@ class Population[A<:Host:ClassTag](
     case 0 => Failure
     case _ => x()
   }
-  
+
   protected def best = sorted.head
   
   protected def meanFitness = StatUtils.mean(population.map(_.fitness).toArray)
@@ -109,7 +111,7 @@ class Population[A<:Host:ClassTag](
     val srt = sorted
     val samples = List(dist.sample(), dist.sample()).map(x => srt(FastMath.round(x*(population.size-1d)).toInt).chromesome)
     BreedingPair(samples(0), samples(1), mutationRate, rng.next())
-  }    
+  }
   
   protected def export() = {
     val bkp = new PopulationBackup()

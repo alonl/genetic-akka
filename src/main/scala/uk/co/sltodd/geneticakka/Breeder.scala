@@ -30,8 +30,11 @@ class Breeder extends Actor {
   def receive = {
     case parents : BreedingPair => {
       require(parents.x.genes.size == parents.y.genes.size)
+//      println("x: " + parents.x.genes + ";   y: " + parents.y.genes)
       val r = new Well44497a(parents.seed)
-    	val rng = new BinomialDistribution(r, 1, 0.5)
+//      val rng = new BinomialDistribution(r, 1, parents.mutationRate)
+//      val rng2 = new BinomialDistribution(r, 1, 0.5)
+      val rng = new BinomialDistribution(r, 1, 0.5)
       val rng2 = new BinomialDistribution(r, 1, parents.mutationRate)
     	val urng = new UniformRealDistribution(r, 0d, 1d)     
       val genes = for ((x,y) <- parents.x.genes.zip(parents.y.genes)) yield (rng.sample, rng2.sample()) match {
@@ -39,6 +42,8 @@ class Breeder extends Actor {
         case (0, 1) => y
         case (1, _) => urng.sample()
       }
+//      println("Genes after: " + genes)
+//      genes
     }
   }
 

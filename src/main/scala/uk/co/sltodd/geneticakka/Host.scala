@@ -49,6 +49,7 @@ trait Host extends Actor {
   val chromosomeSize : Int
   
   protected def create(seed : Int) : Chromosome = {
+//    val rng = new UniformRealDistribution(new Well44497a(seed), -20, 20, 0.000001)
     val rng = new UniformRealDistribution(new Well44497a(seed), 0, 1, 0.000001)
     Chromosome(List.fill(chromosomeSize)(rng.sample))
   }
